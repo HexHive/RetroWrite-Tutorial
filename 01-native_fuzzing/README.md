@@ -20,7 +20,7 @@ patch qemu and find python2 binaries otherwise.
 In the rest of this documentation, TUTORIAL_REPO_DIR refers to the location 
 you found your repository in. 
 
-** ** ATTENTION ** **
+__**ATTENTION**__
 
 Before you begin copying and pasting commands from this section, ready-made 
 scripts exist in this folder for all commands you can see here. For each section you 
