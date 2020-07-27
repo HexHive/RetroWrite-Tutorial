@@ -1,7 +1,7 @@
 
 
 
-CC=clang
+CC?=clang
 CFLAGS=-fPIC -g `pkg-config --cflags --libs zlib`
 
 %.o: %.c
@@ -17,7 +17,7 @@ clean:
 libpngparser.a: pngparser.o crc.o 
 	ar rcs libpngparser.a $^
 
-loadpng: loadpng.o libpngparser.a 
+loadpng: loadpng.o libpngparser.a
 	$(CC) $(CFLAGS) -o $@ $^
 
 storepng: storepng.o libpngparser.a
