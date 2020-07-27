@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
   
   // The output file will be generated based on the PID
   char outputFilename[256];
-  snprintf(outputFilename, sizeof(outputFilename), "%d", getpid());
+  snprintf(outputFilename, sizeof(outputFilename), "storepng-%d", getpid());
   
   // Input filename is passed as the first argument
   const char* filename = argv[1];
