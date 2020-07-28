@@ -77,6 +77,8 @@ we will fuzz from:
 mkdir -p work-native
 ```
 
+**Script**: 01-setup-workdir.sh
+
 We will come back to this. Now you should be able to examine the folders 
 you have available. Here is an annotated listing of the playground 
 directory:
@@ -146,3 +148,18 @@ Whenever you want to stop the fuzzing operation, you can press `CTRL+C`
 as you would to exit any terminal program. Fuzzing will then terminate.
 
 This may take some time.
+
+**Script**: 02-native-fuzz.sh
+
+## Cleanup
+
+To clean up, we simply remove the work directory. Since storepng outputs a 
+lot of files, the easiest method to remove it is to remove the entire directory 
+in one go:
+
+```sh
+cd ..
+rm -rf work-native
+```
+
+**Script**: 03-cleanup.sh
