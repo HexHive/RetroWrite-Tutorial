@@ -7,7 +7,8 @@ set -ex
 # variables (how to find things) go here:
 AFLPP=$(pwd)/aflplusplus
 
-
+# Tune system to work with AFL++
+sudo ./setup_root.sh || exit 1
 
 # build AFL++:
 echo "[*] Cloning AFL++ into $AFLPP"
