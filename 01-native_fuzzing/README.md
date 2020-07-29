@@ -63,8 +63,25 @@ Again, this will take some time, but once done you will see a success message.
 
 ## Learn how to use AFL++ with storepng
 
-We are now going to demonstrate a working fuzz project with AFL++. Firstly, 
-enter the playground folder if you are not there already:
+We are now going to demonstrate a working fuzz project with AFL++. 
+
+To make your life easier, we have a script to add AFL to the path. In the 
+root of the tutorial repository you should see a plain file called "tools". 
+Simply run:
+
+```shell
+source tools
+```
+
+in your shell. Now you should be able to run:
+
+```
+afl-fuzz
+```
+
+and it will execute the fuzzing command from the correct directory.
+
+Now, enter the playground folder if you are not there already:
 
 ```
 cd playground
@@ -150,6 +167,34 @@ as you would to exit any terminal program. Fuzzing will then terminate.
 This may take some time.
 
 **Script**: 02-native-fuzz.sh
+
+## Examining bugs
+
+There is no script for this section, but it is interesting to examine crashes 
+sometimes. AFL++ stores in its fuzz output directory an input that lead to 
+each unique crash. How do we look at this? Well, we can find the crashes 
+from the playground as follows:
+
+```shell
+ls playground/fuzz-native/crashes
+```
+
+These are inputs that were provided to the program in place of the `@@`. 
+The name gives you some information as to the strategy AFL used to find this 
+particular crash. If we want to actually look at the crash, we can do this:
+
+```shell
+cd playground
+gdb bin/storepng
+run fuzz-native/crashes/...
+```
+
+where `fuzz-native/crashes/...` is the name of a particular crash in question. 
+This will run the command with that particular file as an argument, exactly 
+what we want. Under gdb we can then see the stack trace:
+
+![Image showing GDB with a stack trace of crashing storepng using the 
+bt command](gdb.png)
 
 ## Cleanup
 

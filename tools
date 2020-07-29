@@ -1,0 +1,10 @@
+
+# locate this script:
+SCRIPT=$(readlink -f $0)
+SCRIPTDIR=$(dirname $SCRIPT)
+
+# Add AFL to the path:
+export PATH="$PATH:$SCRIPTDIR/aflplusplus/"
+
+# ensure AFL can find itself as well:
+export AFL_PATH="$SCRIPTDIR/aflplusplus"
