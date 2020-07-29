@@ -6,7 +6,7 @@ set -ex
 
 # variables (how to find things) go here:
 AFLPP=$(pwd)/aflplusplus
-DISTRO=`awk -F= '/^NAME/{print $2}' /etc/os-release`
+DISTRO=`awk -F= '/^NAME/{print $2}' /etc/os-release | tr -d '"'`
 
 if [[ "Ubuntu" == "$DISTRO" ]]; then
 # package install
@@ -32,7 +32,7 @@ popd
 
 # build AFL++:
 echo "[*] Cloning AFL++ into $AFLPP"
-if !test -d $AFLPP; then
+if [[ ! -d $AFLPP ]]; then
     git clone https://github.com/AFLplusplus/AFLplusplus $AFLPP
 fi
 
@@ -40,8 +40,8 @@ pushd $AFLPP
 git checkout "2.66c"
 
 echo "[*] Building AFL++"
-
-make || exit 1
+export AFL_USE_ASAN=1 
+make ASAN_BUILD=1 || exit 1
 echo "[*] Building AFL++ qemu_mode support"
 pushd $AFLPP/qemu_mode
 ./build_qemu_support.sh || exit 1
