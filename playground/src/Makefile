@@ -1,10 +1,11 @@
 
 
 CC?=clang
-CFLAGS=-fPIC `pkg-config --cflags --libs zlib`
+CFLAGS=-fPIC
+LDFLAGS=-fPIC `pkg-config --cflags --libs zlib`
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all: libpngparser.a loadpng storepng
 
@@ -17,8 +18,8 @@ libpngparser.a: pngparser.o crc.o
 	ar rcs libpngparser.a $^
 
 loadpng: loadpng.o libpngparser.a
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^
 
 storepng: storepng.o libpngparser.a
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^
 
