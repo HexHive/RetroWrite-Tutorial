@@ -11,10 +11,11 @@ if ! test -f "$SCRIPTDIR/retrowrite/retro/bin/activate"; then
     echo "Please run the setup.sh script first."
 fi
 
-# Add AFL to the path:
-export PATH="$PATH:$SCRIPTDIR/aflplusplus/"
 
 source "$SCRIPTDIR/retrowrite/retro/bin/activate"
 
 # ensure AFL can find itself as well:
 export AFL_PATH="$SCRIPTDIR/aflplusplus"
+
+# Add AFL to the path:
+export PATH="$SCRIPTDIR/aflplusplus/:$PATH"
