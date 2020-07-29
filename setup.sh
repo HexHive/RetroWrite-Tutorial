@@ -6,9 +6,29 @@ set -ex
 
 # variables (how to find things) go here:
 AFLPP=$(pwd)/aflplusplus
+DISTRO=`awk -F= '/^NAME/{print $2}' /etc/os-release`
+
+if [[ "Ubuntu" == "$DISTRO" ]]; then
+# package install
+sudo apt-get install -y make autoconf automake libtool shtool wget curl \
+                       xz-utils gcc g++ cmake \
+                       ninja-build zlib1g make python \
+                       build-essential git ca-certificates \
+                       tar gzip vim libelf-dev libelf1 libiberty-dev \
+                       libboost-all-dev python3-pip python3-venv \
+                       libpcap-dev libbz2-dev liblzo2-dev liblzma-dev liblz4-dev libz-dev \
+                       libxml2-dev libssl-dev libacl1-dev libattr1-dev zip \
+                       unzip libtool-bin bison
+fi
+
+# trigger download of retrowrite and other submodules
+git submodule update --init --recursive
 
 # Tune system to work with AFL++
-sudo ./setup_root.sh || exit 1
+echo 'core' | sudo tee /proc/sys/kernel/core_pattern 
+pushd /sys/devices/system/cpu 
+echo performance | sudo tee cpu*/cpufreq/scaling_governor
+popd
 
 # build AFL++:
 echo "[*] Cloning AFL++ into $AFLPP"
@@ -27,4 +47,7 @@ pushd $AFLPP/qemu_mode
 ./build_qemu_support.sh || exit 1
 popd && popd
 
-
+echo "[*] Building Retrowrite using Retrowrite's helper script"
+pushd retrowrite
+./setup.sh
+popd

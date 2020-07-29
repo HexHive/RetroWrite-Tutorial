@@ -1,10 +1,20 @@
+#!/bin/sh
 
 # locate this script:
 SCRIPT=$(readlink -f $0)
 SCRIPTDIR=$(dirname $SCRIPT)
 
+if ! test -f $SCRIPTDIR/aflplusplus/afl-fuzz; then
+    echo "Please run the setup.sh script first."
+fi
+if ! test -f "$SCRIPTDIR/retrowrite/retro/bin/activate"; then
+    echo "Please run the setup.sh script first."
+fi
+
 # Add AFL to the path:
 export PATH="$PATH:$SCRIPTDIR/aflplusplus/"
+
+source "$SCRIPTDIR/retrowrite/retro/bin/activate"
 
 # ensure AFL can find itself as well:
 export AFL_PATH="$SCRIPTDIR/aflplusplus"
