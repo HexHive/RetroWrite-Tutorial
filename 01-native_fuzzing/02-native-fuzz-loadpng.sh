@@ -14,7 +14,7 @@ if ! command -v afl-fuzz; then
 fi
 
 # cd into the right place
-cd "$SCRIPTDIR_THIS/../playground/work-native"
+cd "$SCRIPTDIR_THIS/../playground/work-native-loadpng"
 
 # exec afl
-afl-fuzz -Q -i ../inputs/storepng -o ../fuzz-native/ -- ../bin/storepng @@
+afl-fuzz -Q -i ../inputs/loadpng -o ../fuzz-native-loadpng/ -- ../bin/loadpng @@

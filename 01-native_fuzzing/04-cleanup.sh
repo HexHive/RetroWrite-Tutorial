@@ -10,4 +10,5 @@ SCRIPTDIR=$(dirname $SCRIPT)
 # cd into the right place
 cd $SCRIPTDIR/../playground
 # remove work directory
-rm -rf work-native
+rm -rf work-native-loadpng
+rm -rf work-native-storepng

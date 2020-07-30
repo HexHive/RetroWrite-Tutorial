@@ -1,8 +1,8 @@
 
 
 CC?=clang
-CFLAGS=-fPIC -O2
-LDFLAGS=-fPIC `pkg-config --cflags --libs zlib`
+CFLAGS=-fPIC -O2 -fPIE
+LDFLAGS=-fPIC -fPIE -pie `pkg-config --cflags --libs zlib`
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
