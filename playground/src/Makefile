@@ -8,6 +8,7 @@ LDFLAGS=-fPIC `pkg-config --cflags --libs zlib`
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: libpngparser.a loadpng storepng
+	cp loadpng storepng ../bin
 
 clean:
 	rm -f libpngparser.a loadpng storepng *.o
