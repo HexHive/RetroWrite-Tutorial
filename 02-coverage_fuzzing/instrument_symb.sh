@@ -1,3 +1,9 @@
+#!/bin/bash
+
+# be noisy
+set -ex
+
+cd ../playground/bin
 
 retrowrite loadpng loadpng_symb.s
 AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc loadpng_symb.s -o loadpng_symb_inst -lz
