@@ -42,7 +42,7 @@ AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc loadpng_asan.s -o loadpng_asan_inst 
 
 cd ../
 ```
-
+**Script**: 01-instrument_asan.sh
 
 ## Learn how to use AFL++ with loadpng_asan_inst
 
@@ -101,6 +101,10 @@ Whenever you want to stop the fuzzing operation, you can press `CTRL+C`
 as you would to exit any terminal program. Fuzzing will then terminate.
 
 This may take some time.
+
+**Script**: 02-asan-fuzzing.sh
+
+**Script**: 02-asan-fuzzing-storepng.sh
 
 
 ## Examining bugs

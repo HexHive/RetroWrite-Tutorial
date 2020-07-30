@@ -44,7 +44,7 @@ AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc loadpng_symb.s -o loadpng_symb_inst 
 
 cd ../
 ```
-
+**Script**: 01-instrument_symb.sh
 
 ## Learn how to use AFL++ with loadpng_symb_inst
 
@@ -104,6 +104,9 @@ as you would to exit any terminal program. Fuzzing will then terminate.
 
 This may take some time.
 
+**Script**: 02-symb-fuzzing.sh
+
+**Script**: 02-symb-fuzzing-store.sh
 
 ## Examining bugs
 
