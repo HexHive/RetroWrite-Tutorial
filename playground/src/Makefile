@@ -1,7 +1,7 @@
 
 
 CC?=clang
-CFLAGS=-fPIC
+CFLAGS=-fPIC -O2
 LDFLAGS=-fPIC `pkg-config --cflags --libs zlib`
 
 %.o: %.c
