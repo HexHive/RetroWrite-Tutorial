@@ -1,1 +1,135 @@
 # Phase 03: instrumenting native binaries with coverage tracking and sanitization
+
+## Introduction
+
+This section aims to introduce you to static binaries rewriting using the tool [retrowrite](https://github.com/HexHive/retrowrite)
+PLease read the carefully the 
+
+In the rest of this documentation, TUTORIAL_REPO_DIR refers to the location 
+you found your repository in. 
+__**ATTENTION**__
+
+Before you begin copying and pasting commands from this section, ready-made 
+scripts exist in this folder for all commands you can see here. For each section you 
+will find a script that performs the commands from that part, so that you 
+do not need to copy and paste commands from the readme. This documentation 
+exists so you can see what is done and why.
+
+## Download and Build AFL++
+
+The installation from the 01-native-fuzzing step should be good for this part.
+
+## Learn how to instrument a binary with ASan
+
+```shell
+source tools
+cd playground/bin
+```
+To generate symbolized assembly you can use the following command:
+```shell
+retrowrite loadpng loadpng_asan.s --asan
+```
+You will get an ASCII file containing ASM instruction of the binary.
+Now you will need to recompile a binary with AFL instrumentations.
+
+In order to do that you will need to use the following commands:
+```shell 
+sed -i 's/asan_init_v4/asan_init/g' loadpng_asan.s
+AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc loadpng_asan.s -o loadpng_asan_inst -lz -fsanitize=address
+
+# to verify that the recompilation went good
+./loadpng_asan_inst
+
+cd ../
+```
+
+
+## Learn how to use AFL++ with loadpng_asan_inst
+
+We are now going to demonstrate a working fuzz project with AFL++. 
+
+
+in your shell. Now you should be able to run:
+
+```
+afl-fuzz
+```
+
+and it will execute the fuzzing command from the correct directory.
+
+
+Now that you are in the playground directory, create a working directory where 
+we will fuzz from:
+
+```
+mkdir -p work-asan
+```
+
+As you can see, we have provided the source to the binaries. We will not use 
+this, but it is available if you wish to experiment.
+
+Now to run `afl-fuzz` we need several pieces of information:
+
+ - The binary we will fuzz.
+ - A directory of input test cases.
+ - A storage directory for fuzzing results
+ - The current working directory.
+
+
+Without further ado, let us execute a fuzzing run:
+
+```
+cd work-asan
+../../aflplusplus/afl-fuzz -i ../inputs/loadpng -o ../fuzz-asan/ -- ../bin/loadpng_asan_inst @@
+```
+
+The commands to `afl-fuzz` are as follows:
+
+ - `-i ../inputs/loadpng` loads the input test cases from the input directory.
+ - `-o ../fuzz-asan/` tells afl++ where to store its information.
+ - `-- ../bin/loadpng_asan_inst @@` is a bit special. There are three parts to this 
+   command: `--`, which terminates the argument list, the path to the 
+   program to be fuzzed, and `@@`. This is a placeholder which tells AFL++ 
+   which argument may be substituted for input by the fuzzer. In other words, 
+   this is how the test cases are supplied.
+
+If all goes well, you should see output like this:
+
+![Image showing terminal with AFL running, presenting crash statistics](aflinaction.png)
+
+Whenever you want to stop the fuzzing operation, you can press `CTRL+C` 
+as you would to exit any terminal program. Fuzzing will then terminate.
+
+This may take some time.
+
+
+## Examining bugs
+
+There is no script for this section, but it is interesting to examine crashes 
+sometimes. AFL++ stores in its fuzz output directory an input that lead to 
+each unique crash. How do we look at this? Well, we can find the crashes 
+from the playground as follows:
+
+```shell
+ls playground/fuzz-asan/crashes
+```
+
+These are inputs that were provided to the program in place of the `@@`. 
+The name gives you some information as to the strategy AFL used to find this 
+particular crash. If we want to actually look at the crash, we can do this:
+
+```shell
+cd playground
+gdb bin/loadpng_asan_inst
+run fuzz-asan/crashes/...
+```
+
+where `fuzz-asan/crashes/...` is the name of a particular crash in question. 
+This will run the command with that particular file as an argument, exactly 
+what we want. Under gdb we can then see the stack trace:
+
+![Image showing GDB with a stack trace of crashing storepng using the 
+bt command](gdb.png)
+
+
+ 
