@@ -298,7 +298,10 @@ int read_png_chunk(FILE *file, struct png_chunk *chunk)
     return 0;
 
 error:
-    if (chunk->chunk_data) free(chunk->chunk_data);
+    if (chunk->chunk_data) {
+        free(chunk->chunk_data);
+        chunk->chunk_data = NULL;
+    }
     return 1;
 }
 
@@ -566,7 +569,7 @@ int load_png(const char *filename, struct image **img)
     struct png_chunk *current_chunk = malloc(sizeof(struct png_chunk));
 
     // libFuzzer example bug demo:
-    //current_chunk->chunk_data = NULL;
+    current_chunk->chunk_data = NULL;
 
     FILE *input = fopen(filename, "rb");
 
