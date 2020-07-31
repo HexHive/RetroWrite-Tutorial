@@ -18,7 +18,7 @@ sudo apt-get install -y make autoconf automake libtool shtool wget curl \
                        libboost-all-dev python3-pip python3-venv \
                        libpcap-dev libbz2-dev liblzo2-dev liblzma-dev liblz4-dev libz-dev \
                        libxml2-dev libssl-dev libacl1-dev libattr1-dev zip \
-                       unzip libtool-bin bison
+                       unzip libtool-bin bison flex libpixman-1-dev
 fi
 
 # trigger download of retrowrite and other submodules
