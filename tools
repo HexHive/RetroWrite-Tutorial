@@ -24,3 +24,10 @@ export AFL_PATH="$SCRIPTDIR/aflplusplus"
 
 # Add AFL to the path:
 export PATH="$PATH:$SCRIPTDIR/aflplusplus"
+
+# some useful aliases:
+alias playg="cd $SCRIPTDIR/playground"
+alias tutorial="cd $SCRIPTDIR"
+alias phase1="cd $SCRIPTDIR/01-native_fuzzing"
+alias phase2="cd $SCRIPTDIR/02-coverage_fuzzing"
+alias phase3="cd $SCRIPTDIR/03-coverage_sanitized_fuzzing"
