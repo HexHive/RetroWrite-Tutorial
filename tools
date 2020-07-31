@@ -2,11 +2,13 @@
 
 # locate this script:
 SCRIPT="${BASH_SOURCE[0]}"
+SCRIPTDIR=""
 if [ -z "$SCRIPT" ]; then
     SCRIPT=$(readlink -f $0)
+    SCRIPTDIR=$(dirname $SCRIPT)
+else
+    SCRIPTDIR="$( cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 ; pwd -P )"
 fi
-SCRIPTDIR=$(dirname $SCRIPT)
-
 if ! test -f $SCRIPTDIR/aflplusplus/afl-fuzz; then
     echo "Please run the setup.sh script first."
 fi
