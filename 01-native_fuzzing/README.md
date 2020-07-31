@@ -207,4 +207,4 @@ cd ..
 rm -rf work-native
 ```
 
-**Script**: 03-cleanup.sh
+**Script**: 04-cleanup.sh
