@@ -29,8 +29,9 @@ echo 'core' | sudo tee /proc/sys/kernel/core_pattern
 if [[ -f /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ]]; then
 pushd /sys/devices/system/cpu 
 echo performance | sudo tee cpu*/cpufreq/scaling_governor
-fi
 popd
+fi
+
 
 # build AFL++:
 echo "[*] Cloning AFL++ into $AFLPP"
