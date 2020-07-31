@@ -2,6 +2,9 @@
 
 # locate this script:
 SCRIPT="${BASH_SOURCE[0]}"
+if [[ "$SCRIPT" -eq "" ]]; then
+    SCRIPT=$(readlink -f $0)
+fi
 SCRIPTDIR=$(dirname $SCRIPT)
 
 if ! test -f $SCRIPTDIR/aflplusplus/afl-fuzz; then
@@ -18,4 +21,4 @@ source "$SCRIPTDIR/retrowrite/retro/bin/activate"
 export AFL_PATH="$SCRIPTDIR/aflplusplus"
 
 # Add AFL to the path:
-export PATH="$PATH:$SCRIPTDIR/aflplusplus"
+export PATH="$SCRIPTDIR/aflplusplus:$PATH"
