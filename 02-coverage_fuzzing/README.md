@@ -15,7 +15,7 @@ will find a script that performs the commands from that part, so that you
 do not need to copy and paste commands from the readme. This documentation 
 exists so you can see what is done and why.
 
-## Download and Build AFL++
+## Downstore and Build AFL++
 
 The installation from the 01-native-fuzzing step should be good for this part.
 
@@ -30,23 +30,23 @@ cd playground/bin
 ```
 To generate symbolized assembly you can use the following command:
 ```shell
-retrowrite loadpng loadpng_symb.s
+retrowrite storepng storepng_symb.s
 ```
 You will get an ASCII file containing ASM instruction of the binary.
 Now you will need to recompile a binary with AFL instrumentations.
 
 In order to do that you will need to use afl-gcc command:
 ```shell 
-AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc loadpng_symb.s -o loadpng_symb_inst -lz
+AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc storepng_symb.s -o storepng_symb_inst -lz
 
 # to verify that the recompilation went good
-./load_symb_inst
+./store_symb_inst
 
 cd ../
 ```
 **Script**: 01-instrument_symb.sh
 
-## Learn how to use AFL++ with loadpng_symb_inst
+## Learn how to use AFL++ with storepng_symb_inst
 
 We are now going to demonstrate a working fuzz project with AFL++. 
 
@@ -64,7 +64,7 @@ Now that you are in the playground directory, create a working directory where
 we will fuzz from:
 
 ```
-mkdir -p work-symb
+mkdir -p work-symb-storepng
 ```
 
 As you can see, we have provided the source to the binaries. We will not use 
@@ -81,15 +81,15 @@ Now to run `afl-fuzz` we need several pieces of information:
 Without further ado, let us execute a fuzzing run:
 
 ```
-cd work-symb
-../../aflplusplus/afl-fuzz -i ../inputs/loadpng -o ../fuzz-sym/ -- ../bin/loadpng_symb_inst @@
+cd work-symb-storepng
+../../aflplusplus/afl-fuzz -i ../inputs/storepng -o ../02-fuzz-sym-storepng/ -- ../bin/storepng_symb_inst @@
 ```
 
 The commands to `afl-fuzz` are as follows:
 
- - `-i ../inputs/loadpng` loads the input test cases from the input directory.
- - `-o ../fuzz-sym/` tells afl++ where to store its information.
- - `-- ../bin/loadpng_symb_inst @@` is a bit special. There are three parts to this 
+ - `-i ../inputs/storepng` stores the input test cases from the input directory.
+ - `-o ../02-fuzz-sym-storepng/` tells afl++ where to store its information.
+ - `-- ../bin/storepng_symb_inst @@` is a bit special. There are three parts to this 
    command: `--`, which terminates the argument list, the path to the 
    program to be fuzzed, and `@@`. This is a placeholder which tells AFL++ 
    which argument may be substituted for input by the fuzzer. In other words, 
@@ -104,9 +104,9 @@ as you would to exit any terminal program. Fuzzing will then terminate.
 
 This may take some time.
 
-**Script**: 02-symb-fuzzing.sh
+**Script**: 02-symb-fuzzing-loadpng.sh  
 
-**Script**: 02-symb-fuzzing-store.sh
+**Script**: 03-symb-fuzzing-storepng.sh
 
 ## Examining bugs
 
@@ -116,7 +116,7 @@ each unique crash. How do we look at this? Well, we can find the crashes
 from the playground as follows:
 
 ```shell
-ls playground/fuzz-sym/crashes
+ls playground/02-fuzz-sym-storepng/crashes
 ```
 
 These are inputs that were provided to the program in place of the `@@`. 
@@ -125,11 +125,11 @@ particular crash. If we want to actually look at the crash, we can do this:
 
 ```shell
 cd playground
-gdb bin/loadpng_symb_inst
-run fuzz-sym/crashes/...
+gdb bin/storepng_symb_inst
+run 02-fuzz-sym-storepng/crashes/...
 ```
 
-where `fuzz-sym/crashes/...` is the name of a particular crash in question. 
+where `02-fuzz-sym-storepng/crashes/...` is the name of a particular crash in question. 
 This will run the command with that particular file as an argument, exactly 
 what we want. Under gdb we can then see the stack trace:
 
@@ -137,4 +137,17 @@ what we want. Under gdb we can then see the stack trace:
 bt command](gdb.png)
 
 
- 
+ ## Cleanup
+
+To clean up, we simply remove the work directory. Since storepng outputs a 
+lot of files, the easiest method to remove it is to remove the entire directory 
+in one go:
+
+```sh
+cd ..
+rm -r work-symb-loadpng
+rm -r work-symb-storepng
+
+```
+
+**Script**: 04-cleanup.sh
