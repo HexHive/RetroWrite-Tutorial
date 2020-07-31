@@ -1,7 +1,12 @@
 #!/bin/sh
 
 # locate this script:
-SCRIPT=$(readlink -f $0)
+SCRIPT=
+if [[ "${BASH_SOURCE[0]}" -ne "" ]]; then
+    SCRIPT="${BASH_SOURCE[0]}"
+else
+    SCRIPT=$(readlink -f $0)
+fi
 SCRIPTDIR=$(dirname $SCRIPT)
 
 if ! test -f $SCRIPTDIR/aflplusplus/afl-fuzz; then
