@@ -15,7 +15,7 @@ will find a script that performs the commands from that part, so that you
 do not need to copy and paste commands from the readme. This documentation 
 exists so you can see what is done and why.
 
-## Download and Build AFL++
+## Downstore and Build AFL++
 
 The installation from the 01-native-fuzzing step should be good for this part.
 
@@ -30,23 +30,23 @@ cd playground/bin
 ```
 To generate symbolized assembly you can use the following command:
 ```shell
-retrowrite loadpng loadpng_symb.s
+retrowrite storepng storepng_symb.s
 ```
 You will get an ASCII file containing ASM instruction of the binary.
 Now you will need to recompile a binary with AFL instrumentations.
 
 In order to do that you will need to use afl-gcc command:
 ```shell 
-AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc loadpng_symb.s -o loadpng_symb_inst -lz
+AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc storepng_symb.s -o storepng_symb_inst -lz
 
 # to verify that the recompilation went good
-./load_symb_inst
+./store_symb_inst
 
 cd ../
 ```
 **Script**: 01-instrument_symb.sh
 
-## Learn how to use AFL++ with loadpng_symb_inst
+## Learn how to use AFL++ with storepng_symb_inst
 
 We are now going to demonstrate a working fuzz project with AFL++. 
 
@@ -82,14 +82,14 @@ Without further ado, let us execute a fuzzing run:
 
 ```
 cd work-symb
-../../aflplusplus/afl-fuzz -i ../inputs/loadpng -o ../fuzz-sym/ -- ../bin/loadpng_symb_inst @@
+../../aflplusplus/afl-fuzz -i ../inputs/storepng -o ../fuzz-sym/ -- ../bin/storepng_symb_inst @@
 ```
 
 The commands to `afl-fuzz` are as follows:
 
- - `-i ../inputs/loadpng` loads the input test cases from the input directory.
+ - `-i ../inputs/storepng` stores the input test cases from the input directory.
  - `-o ../fuzz-sym/` tells afl++ where to store its information.
- - `-- ../bin/loadpng_symb_inst @@` is a bit special. There are three parts to this 
+ - `-- ../bin/storepng_symb_inst @@` is a bit special. There are three parts to this 
    command: `--`, which terminates the argument list, the path to the 
    program to be fuzzed, and `@@`. This is a placeholder which tells AFL++ 
    which argument may be substituted for input by the fuzzer. In other words, 
@@ -125,7 +125,7 @@ particular crash. If we want to actually look at the crash, we can do this:
 
 ```shell
 cd playground
-gdb bin/loadpng_symb_inst
+gdb bin/storepng_symb_inst
 run fuzz-sym/crashes/...
 ```
 
