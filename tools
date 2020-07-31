@@ -2,7 +2,7 @@
 
 # locate this script:
 SCRIPT="${BASH_SOURCE[0]}"
-if [[ "$SCRIPT" -eq "" ]]; then
+if [ -z "$SCRIPT" ]; then
     SCRIPT=$(readlink -f $0)
 fi
 SCRIPTDIR=$(dirname $SCRIPT)
