@@ -31,3 +31,13 @@ alias tutorial="cd $SCRIPTDIR"
 alias phase1="cd $SCRIPTDIR/01-native_fuzzing"
 alias phase2="cd $SCRIPTDIR/02-coverage_fuzzing"
 alias phase3="cd $SCRIPTDIR/03-coverage_sanitized_fuzzing"
+
+function afl-configure-system() {
+# Tune system to work with AFL++
+echo 'core' | sudo tee /proc/sys/kernel/core_pattern
+if [[ -f /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ]]; then
+pushd /sys/devices/system/cpu 
+echo performance | sudo tee cpu*/cpufreq/scaling_governor
+popd
+fi
+}
