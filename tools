@@ -21,4 +21,4 @@ source "$SCRIPTDIR/retrowrite/retro/bin/activate"
 export AFL_PATH="$SCRIPTDIR/aflplusplus"
 
 # Add AFL to the path:
-export PATH="$SCRIPTDIR/aflplusplus:$PATH"
+export PATH="$PATH:$SCRIPTDIR/aflplusplus"
