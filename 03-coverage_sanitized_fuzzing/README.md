@@ -23,7 +23,7 @@ The installation from the 01-native-fuzzing step should setup correctly tools ne
 
 In case you didn't run the script during 01-native-fuzzing phase, you can run the following script:
 
-**Script to run**: [TUTORIAL_REPO_DIR/setup.sh](setup.sh) 
+**Script to run**: [TUTORIAL_REPO_DIR/setup.sh](../setup.sh) 
 
 ## Learn how to instrument a binary with ASan
 

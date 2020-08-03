@@ -59,7 +59,7 @@ cd qemu_mode
 
 Again, this will take some time, but once done you will see a success message.
 
-**Script to run**: TUTORIAL_REPO_DIR/setup.sh
+**Script to run**: [TUTORIAL_REPO_DIR/setup.sh](../setup.sh) 
 
 ## Learn how to use AFL++ with storepng
 
@@ -94,7 +94,7 @@ we will fuzz from:
 mkdir -p work-native
 ```
 
-**Script**: 01-setup-workdir.sh
+**Script**: [01-setup-workdir.sh](01-setup-workdir.sh)
 
 We will come back to this. Now you should be able to examine the folders 
 you have available. Here is an annotated listing of the playground 
@@ -166,7 +166,7 @@ as you would to exit any terminal program. Fuzzing will then terminate.
 
 This may take some time.
 
-**Script**: 02-native-fuzz.sh
+**Script**: [02-native-fuzz.sh](02-native-fuzz-loadpng.sh)
 
 ## Examining bugs
 
@@ -207,4 +207,4 @@ cd ..
 rm -rf work-native
 ```
 
-**Script**: 04-cleanup.sh
+**Script**: [04-cleanup.sh](04-cleanup.sh)
