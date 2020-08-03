@@ -106,9 +106,9 @@ as you would to exit any terminal program. Fuzzing will then terminate.
 
 This may take some time.
 
-**Script**: [02-asan-fuzzing-loadpng.sh](02-asan-fuzzing-loadpng.sh ) 
+**Script**: [02-asan-fuzzing-loadpng.sh](02-asan-fuzzing-loadpng.sh) 
 
-**Script**: [03-asan-fuzzing-storepng.sh](03-asan-fuzzing-storepng.sh )
+**Script**: [03-asan-fuzzing-storepng.sh](03-asan-fuzzing-storepng.sh)
 
 
 ## Examining bugs
