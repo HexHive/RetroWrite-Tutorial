@@ -43,7 +43,7 @@ Now you will need to recompile a binary with AFL instrumentations.
 
 In order to do that you will need to use afl-gcc command:
 ```shell 
-AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc storepng_symb.s -o storepng_symb_inst -lz
+AFL_AS_FORCE_INSTRUMENT=1 afl-gcc storepng_symb.s -o storepng_symb_inst -lz
 
 # to verify that the recompilation went good (no direct crash)
 ./store_symb_inst
@@ -87,7 +87,7 @@ Without further ado, let us execute a fuzzing run:
 
 ```
 cd work-symb-storepng
-../../aflplusplus/afl-fuzz -i ../inputs/storepng -o ../02-fuzz-sym-storepng/ -- ../bin/storepng_symb_inst @@
+afl-fuzz -i ../inputs/storepng -o ../02-fuzz-sym-storepng/ -- ../bin/storepng_symb_inst @@
 ```
 
 The commands to `afl-fuzz` are as follows:
