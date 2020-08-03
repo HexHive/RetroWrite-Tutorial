@@ -3,10 +3,12 @@
 ## Introduction
 
 This section aims to introduce you to static binaries rewriting using the tool [retrowrite](https://github.com/HexHive/retrowrite)
-PLease read the carefully the 
+
+For more information about retrowrite tool and fuzzing, please refer to the presentation or read the retrowrite documentation (available on the public repository).
 
 In the rest of this documentation, TUTORIAL_REPO_DIR refers to the location 
 you found your repository in. 
+
 __**ATTENTION**__
 
 Before you begin copying and pasting commands from this section, ready-made 
@@ -17,10 +19,11 @@ exists so you can see what is done and why.
 
 ## Downstore and Build AFL++
 
-The installation from the 01-native-fuzzing step should be good for this part.
+The installation from the 01-native-fuzzing step should setup correctly tools needed for this part.
 
-**Script to run**: TUTORIAL_REPO_DIR/setup.sh
-in order to install retrowrite dependancies.
+In case you didn't run the script during 01-native-fuzzing phase, you can run the following script:
+**Script to run**: [TUTORIAL_REPO_DIR/setup.sh](setup.sh) 
+
 
 ## Learn how to instrument a binary
 
@@ -28,36 +31,39 @@ in order to install retrowrite dependancies.
 source tools
 cd playground/bin
 ```
+
 To generate symbolized assembly you can use the following command:
 ```shell
 retrowrite storepng storepng_symb.s
 ```
+
 You will get an ASCII file containing ASM instruction of the binary.
+
 Now you will need to recompile a binary with AFL instrumentations.
 
 In order to do that you will need to use afl-gcc command:
 ```shell 
 AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc storepng_symb.s -o storepng_symb_inst -lz
 
-# to verify that the recompilation went good
+# to verify that the recompilation went good (no direct crash)
 ./store_symb_inst
 
 cd ../
 ```
-**Script**: 01-instrument_symb.sh
+
+**Script**: [01-instrument_symb.sh](01-instrument_symb.sh)
 
 ## Learn how to use AFL++ with storepng_symb_inst
 
-We are now going to demonstrate a working fuzz project with AFL++. 
+Now, we are going to demonstrate a working fuzzing campaign with AFL++ project.
 
-
-in your shell. Now you should be able to run:
+In your shell you should be able to run:
 
 ```
 afl-fuzz
 ```
 
-and it will execute the fuzzing command from the correct directory.
+And it will execute the fuzzing command from the correct directory.
 
 
 Now that you are in the playground directory, create a working directory where 
@@ -67,8 +73,7 @@ we will fuzz from:
 mkdir -p work-symb-storepng
 ```
 
-As you can see, we have provided the source to the binaries. We will not use 
-this, but it is available if you wish to experiment.
+As you can see, we have provided the source to the binaries. We will not use this, but it is available if you wish to experiment.
 
 Now to run `afl-fuzz` we need several pieces of information:
 
@@ -104,9 +109,9 @@ as you would to exit any terminal program. Fuzzing will then terminate.
 
 This may take some time.
 
-**Script**: 02-symb-fuzzing-loadpng.sh  
+**Script**: [02-symb-fuzzing-loadpng.sh](02-symb-fuzzing-loadpng.sh)  
 
-**Script**: 03-symb-fuzzing-storepng.sh
+**Script**: [03-symb-fuzzing-storepng.sh](03-symb-fuzzing-storepng.sh)
 
 ## Examining bugs
 
@@ -150,4 +155,4 @@ rm -r work-symb-storepng
 
 ```
 
-**Script**: 04-cleanup.sh
+**Script**: [04-cleanup.sh](04-cleanup.sh)
