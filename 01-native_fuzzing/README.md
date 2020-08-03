@@ -142,7 +142,7 @@ Without further ado, let us execute a fuzzing run:
 
 ```
 cd work-native
-../../aflplusplus/afl-fuzz -Q -i ../inputs/storepng -o ../fuzz-native/ -- ../bin/storepng @@
+afl-fuzz -Q -i ../inputs/storepng -o ../fuzz-native/ -- ../bin/storepng @@
 ```
 
 The commands to `afl-fuzz` are as follows:
