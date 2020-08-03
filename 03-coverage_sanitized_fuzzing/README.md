@@ -35,7 +35,7 @@ Now you will need to recompile a binary with AFL instrumentations.
 In order to do that you will need to use the following commands:
 ```shell 
 sed -i 's/asan_init_v4/asan_init/g' storepng_asan.s
-AFL_AS_FORCE_INSTRUMENT=1 $AFL_PATH/afl-gcc storepng_asan.s -o storepng_asan_inst -lz -fsanitize=address
+AFL_AS_FORCE_INSTRUMENT=1 afl-gcc storepng_asan.s -o storepng_asan_inst -lz -fsanitize=address
 
 # to verify that the recompilation went good
 ./storepng_asan_inst
@@ -80,7 +80,7 @@ Without further ado, let us execute a fuzzing run:
 
 ```
 cd work-asan
-../../aflplusplus/afl-fuzz -i ../inputs/storepng -o ../03-fuzz-asan-storepng/ -- ../bin/storepng_asan_inst @@
+afl-fuzz -i ../inputs/storepng -o ../03-fuzz-asan-storepng/ -- ../bin/storepng_asan_inst @@
 ```
 
 The commands to `afl-fuzz` are as follows:
