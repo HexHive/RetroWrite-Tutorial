@@ -4,7 +4,7 @@
 
 This section aims to introduce you to static binaries rewriting using the tool [retrowrite](https://github.com/HexHive/retrowrite)
 
-For more information about retrowrite tool and fuzzing, please refer to the presentation or read the retrowrite documentation (available on the public repository).
+For more information about retrowrite tool and fuzzing, please refer to the presentation or read the retrowrite documentation (available in the public repository).
 
 In the rest of this documentation, TUTORIAL_REPO_DIR refers to the location 
 you found your repository in. 
@@ -17,9 +17,9 @@ will find a script that performs the commands from that part, so that you
 do not need to copy and paste commands from the readme. This documentation 
 exists so you can see what is done and why.
 
-## Downstore and Build AFL++
+## Download and Build AFL++
 
-The installation from the 01-native-fuzzing step should setup correctly tools needed for this part.
+The installation from the 01-native-fuzzing step should correctly set up the tools needed for this part.
 
 In case you didn't run the script during 01-native-fuzzing phase, you can run the following script:
 
@@ -35,16 +35,17 @@ To generate symbolized assembly you can use the following command:
 ```shell
 retrowrite storepng storepng_asan.s --asan
 ```
-You will get an ASCII file containing ASM instruction of the binary.
 
-Now you will need to recompile a binary with AFL instrumentations.
+You will get an ASCII file containing the assembler instructions of the binary.
+
+Now you will need to recompile the binary with AFL instrumentations.
 
 In order to do that you will need to use the following commands:
 ```shell 
 sed -i 's/asan_init_v4/asan_init/g' storepng_asan.s
 AFL_AS_FORCE_INSTRUMENT=1 afl-gcc storepng_asan.s -o storepng_asan_inst -lz -fsanitize=address
 
-# to verify that the recompilation went good
+# to verify that the recompilation worked, run the binary
 ./storepng_asan_inst
 
 cd ../
@@ -53,7 +54,7 @@ cd ../
 
 ## Learn how to use AFL++ with storepng_asan_inst
 
-Now, we are going to demonstrate a working fuzzing campaign  with AFL++ project. 
+Now, we are going to demonstrate a working fuzzing campaign with AFL++. 
 
 In your shell you should be able to run:
 

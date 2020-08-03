@@ -19,7 +19,7 @@ exists so you can see what is done and why.
 
 ## Downstore and Build AFL++
 
-The installation from the 01-native-fuzzing step should setup correctly tools needed for this part.
+The installation from the 01-native-fuzzing step should correctly set up the tools needed for this part.
 
 In case you didn't run the script during 01-native-fuzzing phase, you can run the following script:
 **Script to run**: [TUTORIAL_REPO_DIR/setup.sh](../setup.sh) 
