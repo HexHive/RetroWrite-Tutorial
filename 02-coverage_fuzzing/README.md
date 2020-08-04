@@ -46,7 +46,7 @@ In order to do that you will need to use afl-gcc command:
 AFL_AS_FORCE_INSTRUMENT=1 afl-gcc storepng_symb.s -o storepng_symb_inst -lz
 
 # to verify that the recompilation went good (no direct crash)
-./store_symb_inst
+./storepng_symb_inst
 
 cd ../
 ```
